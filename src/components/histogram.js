@@ -3,15 +3,15 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function Histogram({ data }) {
-  var margin = {top: 10, right: 30, bottom: 30, left: 40},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+  var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    width = 500 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
   const ref = useD3(
     (svg) => {
-        // X axis: scale and draw:
-        var x = d3.scaleLinear()
-        .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      // X axis: scale and draw:
+      var x = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) { return +d.price }) + 10])
         .range([0, width]);
       svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -20,7 +20,7 @@ function Histogram({ data }) {
       // Y axis: initialization
       var y = d3.scaleLinear()
         .range([height, 0]);
-      var yAxis = svg.append("g")
+      // var yAxis = svg.append("g")
 
       // A function that builds the graph for a specific value of bin
       function update(nBin) {
@@ -36,10 +36,10 @@ function Histogram({ data }) {
 
       // Y axis: update now that we know the domain
       y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-      yAxis
-          .transition()
-          .duration(1000)
-          .call(d3.axisLeft(y));
+      // yAxis
+      //     .transition()
+      //     .duration(1000)
+      //     .call(d3.axisLeft(y));
 
       // Join the rect with the bins data
       var u = svg.selectAll("rect")
@@ -68,6 +68,11 @@ function Histogram({ data }) {
 
       // Initialize with 20 bins
       update(20)
+
+      // Listen to the button -> update if user change it
+      d3.select("#nBin").on("input", function() {
+        update(+this.value);
+      });
     });
 
   return (
@@ -80,11 +85,7 @@ function Histogram({ data }) {
         transform: "rotate(90deg)",
         transformOrigin: 250
       }}
-    >
-      <g className="plot-area" />
-      <g className="x-axis" />
-      <g className="y-axis" />
-    </svg>
+    />
   );
 }
 
