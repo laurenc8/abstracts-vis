@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- Load d3.js -->
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+<script src="https://d3js.org/d3.v3.min.js"></script>
+  <head>
+<title>Bar Chart</title>
+  </head>
+  <body>
+
+    <ul>
+      <li><li>
+    </ul>
+
+
+
+sdhfldsa
+
+</body>
+<script>
+
+
+//   var svg = d3.select("svg");
+var data_ = [], datan_ = [];
+d3.csv("/test.csv", function(data) {
+    for (d of data){
+      data_.push(d["Dis"]);
+      datan_.push(d["Noun"]);
+    }
+    //data.forEach(function(d) {
+    var ul = svg.append('ul');
+    d = data_.slice(0, 10);
+    console.log(d);
+    ul.selectAll('li')
+    	.data(d)
+    	.enter()
+    	.append('li')
+    	.html(String);
+
+
+  //});
+
+});
+
+
+
+let i = 0;
+while(i<3){
+  data_.push("2");
+  i +=1;
+}
+
+// data_ = Array.from(data_);
+console.log(data_);
+
+
+
+svg.append("p").text("Number of Batteries Required:");
+svg.append("p").data(data_).text(function(d) { return d; });
+
+
+var d = ["1","2","3"];
+d.push("4");
+console.log(d);
+var ul = svg.append('ul');
+d = d.slice(0, 2);
+console.log(d);
+ul.selectAll('li')
+	.data(d)
+	.enter()
+	.append('li')
+	.html(String);
+
+
+
+console.log(datan_)
+
+
+
+
+  </script>
