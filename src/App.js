@@ -1,12 +1,11 @@
 import './App.css';
-import React, { Component }  from 'react';
-
-{/* <Route exact path="/" component={SwipePage} /> */}
+import Histogram from './components/histogram';
 
 function App() {
+  const data = [{price: 15}, {price: 20}, {price: 250}]
   return (
-    <div className="App">
-      hi
+    <div>
+      <Histogram data={data}/>
     </div>
   );
 }
