@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<script src="vis.js"></script>
+<!-- <script src="vis.js"></script> -->
+
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -13,39 +14,31 @@
 <center>
 <p>
   <div class="slidecontainer">
-    <label>Data Points</label>
+    <label>Number of Bins/Results</label>
     <input type="range" min="1" max="33" value="10" class="slider" id="nBin">
   </div>
 </p>
-
 </center>
 
 <div class="row">
 <div class="column">
-
-  <div id="my_dataviz"></div>
-
+  <center>
+    <h3>Number</h3>
+    <div id="my_dataviz"></div>
+  </center>
 </div>
 <div class="column">
   <center>
-  <h3>Discriptor</h3>
-</center>
-
-
-
+    <h3>Descriptor</h3>
+  </center>
 </div>
-
-
 <div class="column">
   <center>
-  <h3>Noun</h3>
-</center>
-
-
-  <div id="noun"></div>
-load out list;
+    <h3>Noun</h3>
+    LIST RESULTS
+  </center>
+<!-- <div id="noun"></div> -->
 </div>
-
 
 <script>
 
@@ -134,7 +127,8 @@ var svg = d3.select("#my_dataviz")
             });
 
           });
-          </script>
+
+</script>
 
 <!--
 <script>
