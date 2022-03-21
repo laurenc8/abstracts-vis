@@ -1,23 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import Histogram from './components/histogram';
 
 function App() {
+  const data = [{price: 15}, {price: 20}, {price: 250}]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Histogram data={data}/>
     </div>
   );
 }
