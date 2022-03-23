@@ -3,7 +3,7 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function Histogram({ data }) {
-  var margin = {top: 0, right: 0, bottom: 0, left: 0},
+  var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
@@ -12,15 +12,16 @@ function Histogram({ data }) {
       // X axis: scale and draw:
       var x = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) { return +d.price }) + 10])
-        .range([0, width]);
+        .range([30, width]);
       svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + (height+10) + ")")
         .call(d3.axisBottom(x));
 
       // Y axis: initialization
       var y = d3.scaleLinear()
         .range([height, 0]);
-      // var yAxis = svg.append("g")
+      var yAxis = svg.append("g")
+        .attr("transform", "translate(30, 10)")
 
       // A function that builds the graph for a specific value of bin
       function update(nBin) {
@@ -36,10 +37,10 @@ function Histogram({ data }) {
 
       // Y axis: update now that we know the domain
       y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
-      // yAxis
-      //     .transition()
-      //     .duration(1000)
-      //     .call(d3.axisLeft(y));
+      yAxis
+          .transition()
+          .duration(1000)
+          .call(d3.axisLeft(y));
 
       // Join the rect with the bins data
       var u = svg.selectAll("rect")
@@ -53,10 +54,12 @@ function Histogram({ data }) {
           .transition() // and apply changes to all of them
           .duration(1000)
             .attr("x", 1)
-            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-            .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + (y(d.length)+10) + ")"; })
+            .attr("width", function(d) { return x(d.x1) - x(d.x0) - 4 ; })
             .attr("height", function(d) { return height - y(d.length); })
-            .style("fill", "#69b3a2")
+            .style("stroke", "#69b3a2")
+            .style("stroke-width", "3px")
+            .style("fill", "none")
 
 
       // If less bar in the new histogram, I delete the ones not in use anymore
@@ -79,11 +82,10 @@ function Histogram({ data }) {
     <svg
       ref={ref}
       style={{
-        height: 500,
-        width: "100%",
-        margin: "100px",
+        height: 350,
+        width: 500,
         transform: "rotate(90deg)",
-        transformOrigin: 250
+        transformOrigin: 150
       }}
     />
   );
