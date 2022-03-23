@@ -11,7 +11,7 @@ function Histogram({ data }) {
     (svg) => {
       // X axis: scale and draw:
       var x = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.price }) + 10])
+        .domain([0, d3.max(data, function(d) { return +d.frequency }) + 10])
         .range([30, width]);
       svg.append("g")
         .attr("transform", "translate(0," + (height+10) + ")")
@@ -28,7 +28,7 @@ function Histogram({ data }) {
 
       // set the parameters for the histogram
       var histogram = d3.histogram()
-          .value(function(d) { return d.price; })   // I need to give the vector of value
+          .value(function(d) { return d.frequency; })   // I need to give the vector of value
           .domain(x.domain())  // then the domain of the graphic
           .thresholds(x.ticks(nBin)); // then the numbers of bins
 
@@ -57,7 +57,7 @@ function Histogram({ data }) {
             .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + (y(d.length)+10) + ")"; })
             .attr("width", function(d) { return x(d.x1) - x(d.x0) - 4 ; })
             .attr("height", function(d) { return height - y(d.length); })
-            .style("stroke", "#69b3a2")
+            .style("stroke", "#dcd0ff")
             .style("stroke-width", "3px")
             .style("fill", "none")
 
