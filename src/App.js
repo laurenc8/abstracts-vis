@@ -13,19 +13,26 @@ function App() {
   
   return (
     <div>
-      <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
-        <Slider
-          aria-label="Number of Bins"
-          defaultValue={20}
-          getAriaValueText={valuetext}
-          valueLabelDisplay="on"
-          step={1}
-          marks
-          min={1}
-          max={50}
-        />
-      </Box>
-      <Histogram data={data} nBin={nBin}/>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+        <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
+          <Slider
+            aria-label="Number of Bins"
+            defaultValue={20}
+            getAriaValueText={valuetext}
+            valueLabelDisplay="on"
+            step={1}
+            marks
+            min={1}
+            max={50}
+          />
+        </Box>
+      </div>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <Histogram data={data} nBin={nBin}/>
+        <Histogram data={data} nBin={nBin}/>
+        <Histogram data={data} nBin={nBin}/>
+      </div>
     </div>
   );
 }
