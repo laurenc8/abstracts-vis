@@ -20,12 +20,14 @@ function Histogram({ data, nBin}) {
 
       // Y axis: initialization
       var y = d3.scaleLinear()
+        //.domain([0, d3.max(data, function(d) { return d.length; })])
         .range([height, 0]);
       var yAxis = svg.append("g")
-        .attr("transform", "translate(30, 10)")
+         .attr("transform", "translate(30, 10)")
 
       // A function that builds the graph for a specific value of bin
       function update(nBin) {
+        console.log(nBin);
 
         // set the parameters for the histogram
         var histogram = d3.histogram()
@@ -60,7 +62,7 @@ function Histogram({ data, nBin}) {
           .attr("height", function(d) { return height - y(d.length); })
           .style("stroke", "#dcd0ff")
           .style("stroke-width", "3px")
-          .style("fill", "none")
+          .style("fill", "#dcd0ff")
 
 
         // If less bar in the new histogram, I delete the ones not in use anymore
