@@ -5,8 +5,46 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Test from './components/test';
 import DatatablePage from './components/table';
+import Papa from "papaparse";
 
 function App() {
+
+  // State to store parsed data
+  const [parsedData, setParsedData] = useState([]);
+
+  //State to store table Column name
+  const [tableRows, setTableRows] = useState([]);
+
+  //State to store the values
+  const [values, setValues] = useState([]);
+
+  const changeHandler = (event) => {
+    // Passing file data (event.target.files[0]) to parse using Papa.parse
+    Papa.parse(event.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        const rowsArray = [];
+        const valuesArray = [];
+
+        // Iterating data to get column name and their values
+        results.data.map((d) => {
+          rowsArray.push(Object.keys(d));
+          valuesArray.push(Object.values(d));
+        });
+
+        // Parsed Data Response in array format
+        setParsedData(results.data);
+
+        // Filtered Column Names
+        setTableRows(rowsArray[0]);
+
+        // Filtered Values
+        setValues(valuesArray);
+      },
+    });
+  };
+
   const [nBin, setnBin] = useState(30)
   const data = [{
     name: 'Tiger Nixon',
@@ -66,35 +104,7 @@ function App() {
   function valuetext(value) {
     setnBin(value)
   }
-  const data1 = {
-    columns: [
-      {
-        label: 'Name',
-        field: 'name',
-        sort: 'asc',
-        width: 150
-      },
-      {
-        label: 'Position',
-        field: 'position',
-        sort: 'asc',
-        width: 270
-      },
-      {
-        label: 'Office',
-        field: 'office',
-        sort: 'asc',
-        width: 200
-      },
-      {
-        label: 'Age',
-        field: 'age',
-        sort: 'asc',
-        width: 100
-      }
-    ],
-    rows: data
-  };
+
 
 
   //idk how to turn data into a list of just ages for the histogram :(
@@ -108,10 +118,47 @@ function App() {
 
   return (
     <div>
+      <input
+        type="file"
+        name="file"
+        onChange={changeHandler}
+        accept=".csv"
+        style={{ display: "block", margin: "10px auto" }}
+      />
+      <br />
+      <br />
+
+
+
+      <table>
+        <thead>
+          <tr>
+            {tableRows.map((rows, index) => {
+              return <th key={index}>{rows}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {values.slice(0,nBin).map((value, index) => {
+            console.log(index)
+            return (
+              <tr key={index}>
+                {value.map((val, i) => {
+                  return <td key={i}>{val}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
       <h1>Clinical Trials Dashboard</h1>
-      <DatatablePage data = {data1} nbins = {nBin}/>
+
+
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+
+
         <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
           <Slider
             aria-label="Number of Bins"
@@ -126,12 +173,14 @@ function App() {
         </Box>
 
       </div>
+
       <div style={{display: "flex", justifyContent: "center"}}>
         <Histogram data={data} nBin={nBin}/>
         <Histogram data={data} nBin={nBin}/>
         <Histogram data={data} nBin={nBin}/>
       </div>
     </div>
+
   );
 }
 
