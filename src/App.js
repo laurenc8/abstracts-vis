@@ -6,7 +6,8 @@ import Slider from '@mui/material/Slider';
 import Test from './components/test';
 import DatatablePage from './components/table';
 import Papa from "papaparse";
-
+import { Layout} from 'antd';
+import 'antd';
 function App() {
 
   // State to store parsed data
@@ -46,118 +47,35 @@ function App() {
   };
 
   const [nBin, setnBin] = useState(30)
-  const data = [{
-    name: 'Tiger Nixon',
-    position: 'System Architect',
-    office: 'Edinburgh',
-    age: '61'
-  },
-  {
-    name: 'Garrett Winters',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '63'
-  },
-  {
-    name: 'Ashton Cox',
-    position: 'Junior Technical Author',
-    office: 'San Francisco',
-    age: '66'
-  },
-  {
-    name: 'Cedric Kelly',
-    position: 'Senior Javascript Developer',
-    office: 'Edinburgh',
-    age: '22'
-  },
-  {
-    name: 'Airi Satou',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '33'
-  },
-  {
-    name: 'Brielle Williamson',
-    position: 'Integration Specialist',
-    office: 'New York',
-    age: '61'
-  },
-  {
-    name: 'Herrod Chandler',
-    position: 'Sales Assistant',
-    office: 'San Francisco',
-    age: '59'
-  },
-  {
-    name: 'Rhona Davidson',
-    position: 'Integration Specialist',
-    office: 'Tokyo',
-    age: '55'
-  },
-  {
-    name: 'Colleen Hurst',
-    position: 'Javascript Developer',
-    office: 'San Francisco',
-    age: '39'
-  }]
-  // [{frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 75}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 50}]
+
   function valuetext(value) {
     setnBin(value)
   }
 
-
-
-  //idk how to turn data into a list of just ages for the histogram :(
-
-//   const ageList = data.map(ages => {
-//   return (
-//   <p>{ages.age}</p>
-//   )
-// });
-//   console.log(data.getElementById('age'))
+  var col0 = values.map(d => d[2]);
+  console.log(col0);
 
   return (
     <div>
-      <input
-        type="file"
-        name="file"
-        onChange={changeHandler}
-        accept=".csv"
-        style={{ display: "block", margin: "10px auto" }}
-      />
-      <br />
-      <br />
+    <h1>Clinical Trials Dashboard</h1>
+    <Layout style={{ height: 20 }}>
+        <input
+          type="file"
+          name="file"
+          onChange={changeHandler}
+          accept=".csv"
+          style={{ display: "block", margin: "10px auto" }}
+        />
+        <br />
+        <br />
 
 
 
-      <table>
-        <thead>
-          <tr>
-            {tableRows.map((rows, index) => {
-              return <th key={index}>{rows}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {values.slice(0,nBin).map((value, index) => {
-            console.log(index)
-            return (
-              <tr key={index}>
-                {value.map((val, i) => {
-                  return <td key={i}>{val}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
-      <h1>Clinical Trials Dashboard</h1>
-
+</Layout>
+      <Layout style={{ height: 500 }}>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
 
         <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
           <Slider
@@ -175,10 +93,15 @@ function App() {
       </div>
 
       <div style={{display: "flex", justifyContent: "center"}}>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
+        <Histogram data={values.slice(0,nBin)} nBin={nBin}/>
       </div>
+
+    </Layout>
+
+    <Layout style={{ height: 920 }}>
+    <DatatablePage tableRows={tableRows} values={values} nbins={nBin}/>
+    </Layout>
+
     </div>
 
   );
