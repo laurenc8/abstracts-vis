@@ -1,15 +1,13 @@
-import { useD3 } from '../hooks/useD3';
-import React from 'react';
 import * as d3 from 'd3';
+// import { useD3 } from './hooks/useD3';
+import React from 'react';
 
-function Histogram({ data, nBin}) {
-  console.log(nBin)
+const Histogram = ({data, nBin}) => {
   var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-  const ref = useD3(
-    (svg) => {
+    const ref = (svg) => {
       // X axis: scale and draw:
       var x = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) { return +d.frequency }) + 10])
@@ -73,7 +71,8 @@ function Histogram({ data, nBin}) {
       }
 
       update(nBin)
-    });
+    };
+
 
   return (
     <svg
@@ -86,6 +85,6 @@ function Histogram({ data, nBin}) {
       }}
     />
   );
-}
 
+}
 export default Histogram;

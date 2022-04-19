@@ -1,13 +1,12 @@
 import './App.css';
 import React, { useState } from 'react';
-import Histogram from './components/histogram';
+import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Test from './components/test';
-import DatatablePage from './components/table';
+import DatatablePage from './components/table/table';
 import Papa from "papaparse";
 import { Layout} from 'antd';
-import 'antd';
+const { Sider, Content, Footer } = Layout;
 function App() {
 
   // State to store parsed data
@@ -99,7 +98,7 @@ function App() {
     </Layout>
 
     <Layout style={{ height: 920 }}>
-    <DatatablePage tableRows={tableRows} values={values} nbins={nBin}/>
+    <DatatablePage tableRows={tableRows} values={values}/>
     </Layout>
 
     </div>
