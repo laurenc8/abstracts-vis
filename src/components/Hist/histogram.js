@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-// import { useD3 } from './hooks/useD3';
+import { useD3 } from './hooks/useD3';
 import React from 'react';
 
 const Histogram = ({data, nBin}) => {
@@ -7,7 +7,8 @@ const Histogram = ({data, nBin}) => {
     width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-    const ref = (svg) => {
+    const ref = useD3(
+    (svg) => {
       // X axis: scale and draw:
       var x = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) { return +d.frequency }) + 10])
@@ -65,13 +66,13 @@ const Histogram = ({data, nBin}) => {
 
         // If less bar in the new histogram, I delete the ones not in use anymore
         u
-          .exit()
-          .remove()
+         .exit()
+         .remove()
 
-      }
+     }
 
-      update(nBin)
-    };
+     update(nBin)
+   });
 
 
   return (
