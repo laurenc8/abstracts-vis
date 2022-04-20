@@ -104,7 +104,7 @@ export default withTooltip(
               tickLabelProps={() => ({
                 fill: textColor,
                 fontFamily: 'Calibre, sans-serif',
-                fontSize: 15,
+                fontSize: 20,
                 textAnchor: 'end',
                 dy: '0.33em',
               })}

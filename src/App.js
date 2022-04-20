@@ -61,7 +61,7 @@ function App() {
         // Show Filter input
         setShowFilterInput('text');
 
-        updateBarCharts([[0, 0, 0, "patients"], [0, 0, 0, "patients"], [0, 0, 0, "participants"]])
+        updateBarCharts([[0, 0, 0, "patients"], [0, 0, 0, "patients"], [0, 0, 0, "participants"], [0, 0, 0, "smokers"]])
       },
     });
   };
@@ -81,11 +81,12 @@ function App() {
     for (let i = 0; i < data.length; i++) {
       const row = data[i]
       if (row[3] !== "") {
-        if (row[3] in newAdjs) {
+        if (newAdjs.has(row[3])) {
           newAdjData[row[3]] = newAdjData[row[3]] + 1
         } else {
           newAdjData[row[3]] = 1
           newAdjs.add(row[3])
+          console.log(newAdjs)
         }
       }
     }
