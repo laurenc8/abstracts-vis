@@ -19,6 +19,14 @@ function App() {
   //State to store the values
   const [values, setValues] = useState([]);
 
+  //State to store if inputting CSV is hidden
+  const [showCSVInput, setShowCSVInput] = useState('file');
+
+  //State to filter values
+  const [showFilterInput, setShowFilterInput] = useState('hidden');
+
+  const [allValues, setAllValues] = useState('');
+
   const changeHandler = (event) => {
     // Passing file data (event.target.files[0]) to parse using Papa.parse
     Papa.parse(event.target.files[0], {
@@ -42,9 +50,23 @@ function App() {
 
         // Filtered Values
         setValues(valuesArray);
+        setAllValues(valuesArray);
+
+        // Hide CSV Input
+        setShowCSVInput('hidden');
+
+        // Show Filter input
+        setShowFilterInput('text');
       },
     });
   };
+
+  const filterNoun = (event) => {
+    const curNoun = event.target.value;
+    setValues(allValues.filter(d => {
+      return d[3].startsWith(curNoun);
+    }))
+  }
 
   const [nBin, setnBin] = useState(30)
 
@@ -99,7 +121,7 @@ function App() {
     </Layout>
 
     <Layout style={{ height: 920 }}>
-    <DatatablePage tableRows={tableRows} values={values} nbins={nBin}/>
+    <DatatablePage tableRows={tableRows} values={values}/>
     </Layout>
 
     </div>

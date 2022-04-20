@@ -1,5 +1,4 @@
 import React from 'react';
-import { MDBDataTable } from 'mdbreact';
 import './table.css';
 
 const DatatablePage = ( {tableRows, values, nbins} ) => {
@@ -15,7 +14,7 @@ const DatatablePage = ( {tableRows, values, nbins} ) => {
         </tr>
       </thead>
       <tbody>
-        {values.slice(0,nbins).map((value, index) => {
+        {values.map((value, index) => {
           console.log(index)
           return (
             <tr key={index}>
