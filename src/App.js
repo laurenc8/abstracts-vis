@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import Histogram from './components/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Test from './components/test';
-import DatatablePage from './components/table';
+// import Test from './components/test';
+// import DatatablePage from './components/table';
 import Papa from "papaparse";
+import NumHist from './components/NumHist.js'
 
 function App() {
 
@@ -25,6 +26,9 @@ function App() {
   const [showFilterInput, setShowFilterInput] = useState('hidden');
 
   const [allValues, setAllValues] = useState('');
+
+  const [adjData, setAdjData] = useState([])
+  const [nounData, setNounData] = useState([])
 
   const changeHandler = (event) => {
     // Passing file data (event.target.files[0]) to parse using Papa.parse
@@ -56,6 +60,8 @@ function App() {
 
         // Show Filter input
         setShowFilterInput('text');
+
+        updateBarCharts([[0, 0, 0, "patients"], [0, 0, 0, "patients"], [0, 0, 0, "participants"]])
       },
     });
   };
@@ -68,96 +74,59 @@ function App() {
   }
 
   const [nBin, setnBin] = useState(30)
-  const data = [{
-    name: 'Tiger Nixon',
-    position: 'System Architect',
-    office: 'Edinburgh',
-    age: '61'
-  },
-  {
-    name: 'Garrett Winters',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '63'
-  },
-  {
-    name: 'Ashton Cox',
-    position: 'Junior Technical Author',
-    office: 'San Francisco',
-    age: '66'
-  },
-  {
-    name: 'Cedric Kelly',
-    position: 'Senior Javascript Developer',
-    office: 'Edinburgh',
-    age: '22'
-  },
-  {
-    name: 'Airi Satou',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '33'
-  },
-  {
-    name: 'Brielle Williamson',
-    position: 'Integration Specialist',
-    office: 'New York',
-    age: '61'
-  },
-  {
-    name: 'Herrod Chandler',
-    position: 'Sales Assistant',
-    office: 'San Francisco',
-    age: '59'
-  },
-  {
-    name: 'Rhona Davidson',
-    position: 'Integration Specialist',
-    office: 'Tokyo',
-    age: '55'
-  },
-  {
-    name: 'Colleen Hurst',
-    position: 'Javascript Developer',
-    office: 'San Francisco',
-    age: '39'
-  }]
-  // [{frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 75}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 50}]
+
+  const updateBarCharts = (data) => {
+    let newAdjData = {}
+    let newAdjs = new Set()
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i]
+      if (row[3] !== "") {
+        if (row[3] in newAdjs) {
+          newAdjData[row[3]] = newAdjData[row[3]] + 1
+        } else {
+          newAdjData[row[3]] = 1
+          newAdjs.add(row[3])
+        }
+      }
+    }
+    let finalAdjData = []
+    newAdjs.forEach(key => {
+      finalAdjData.push({category: key, frequency: newAdjData[key]})
+    })
+    // console.log(finalAdjData)
+    setAdjData(finalAdjData)
+  }
+
   function valuetext(value) {
     setnBin(value)
   }
 
-
-
-  //idk how to turn data into a list of just ages for the histogram :(
-
-//   const ageList = data.map(ages => {
-//   return (
-//   <p>{ages.age}</p>
-//   )
-// });
-//   console.log(data.getElementById('age'))
-
   return (
-    <div>
-      <input
-        type={showCSVInput}
-        name="file"
-        onChange={changeHandler}
-        accept=".csv"
-        style={{ display: "block", margin: "10px auto" }}
-      />
-      <br />
-      <br />
+    <div style={{margin: "20px"}} className="font-link">
+      <h1 style={{display: "flex", justifyContent: "center"}}>
+        PICO Extractor
+      </h1>
+
+      {/* <p className="font-link">
+      Upload csv data below!
+      </p> */}
+
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <input
+          type={showCSVInput}
+          name="file"
+          onChange={changeHandler}
+          accept=".csv"
+        />
+      </div>
 
       <input
         type={showFilterInput}
         name="filter"
         onChange={filterNoun}
         style={{ display: "block", margin: "10px auto" }}
+        label="hi"
       />
-
-
 
       <table>
         <thead>
@@ -168,7 +137,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {values.slice(0,nBin).map((value, index) => {
+          {values.map((value, index) => {
             return (
               <tr key={index}>
                 {value.map((val, i) => {
@@ -180,12 +149,8 @@ function App() {
         </tbody>
       </table>
 
-      <h1>Clinical Trials Dashboard</h1>
-
-
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
 
         <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
           <Slider
@@ -199,13 +164,12 @@ function App() {
             max={20}
           />
         </Box>
-
       </div>
 
       <div style={{display: "flex", justifyContent: "center"}}>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
+        {/* {console.log(values[0])} */}
+        <Histogram data={values} nBin={nBin}/>
+        <NumHist width="400" height="220" data={adjData}/>
       </div>
     </div>
 

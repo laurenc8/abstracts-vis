@@ -3,7 +3,6 @@ import React from 'react';
 import * as d3 from 'd3';
 
 function Histogram({ data, nBin}) {
-  console.log(nBin)
   var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
@@ -12,7 +11,7 @@ function Histogram({ data, nBin}) {
     (svg) => {
       // X axis: scale and draw:
       var x = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.frequency }) + 10])
+        .domain([0, d3.max(data, function(d) { return +d.numbers }) + 10])
         .range([30, width]);
       svg.append("g")
         .attr("transform", "translate(0," + (height+10) + ")")
@@ -27,11 +26,10 @@ function Histogram({ data, nBin}) {
 
       // A function that builds the graph for a specific value of bin
       function update(nBin) {
-        console.log(nBin);
 
         // set the parameters for the histogram
         var histogram = d3.histogram()
-          .value(function(d) { return d.frequency; })   // I need to give the vector of value
+          .value(function(d) { return d.numbers; })   // I need to give the vector of value
           .domain(x.domain())  // then the domain of the graphic
           .thresholds(x.ticks(nBin)); // then the numbers of bins
 
