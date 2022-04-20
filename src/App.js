@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import DatatablePage from './components/table/table';
 import Papa from "papaparse";
-import { Layout} from 'antd';
-const { Sider, Content, Footer } = Layout;
+//import { Layout} from 'antd';
+//const { Sider, Content, Footer } = Layout;
 function App() {
 
   // State to store parsed data
@@ -57,7 +57,6 @@ function App() {
   return (
     <div>
     <h1>Clinical Trials Dashboard</h1>
-    <Layout style={{ height: 20 }}>
         <input
           type="file"
           name="file"
@@ -69,37 +68,7 @@ function App() {
         <br />
 
 
-
-</Layout>
-      <Layout style={{ height: 500 }}>
-
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
-        <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
-          <Slider
-            aria-label="Number of Bins"
-            defaultValue={10}
-            getAriaValueText={valuetext}
-            valueLabelDisplay="on"
-            step={1}
-            marks
-            min={1}
-            max={20}
-          />
-        </Box>
-
-      </div>
-
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <Histogram data={values.slice(0,nBin)} nBin={nBin}/>
-      </div>
-
-    </Layout>
-
-    <Layout style={{ height: 920 }}>
-    <DatatablePage tableRows={tableRows} values={values}/>
-    </Layout>
+<DatatablePage tableRows={tableRows} values={values}/>
 
     </div>
 
