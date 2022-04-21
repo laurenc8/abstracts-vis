@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import Histogram from './components/histogram';
+import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Test from './components/test';
@@ -94,7 +94,7 @@ function App() {
 
 
 </Layout>
-      <Layout style={{ height: 500 }}>
+      <Layout style={{ height: 600 }}>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>

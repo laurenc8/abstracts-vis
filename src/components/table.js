@@ -15,7 +15,6 @@ const DatatablePage = ( {tableRows, values, nbins} ) => {
       </thead>
       <tbody>
         {values.map((value, index) => {
-          console.log(index)
           return (
             <tr key={index}>
               {value.map((val, i) => {
