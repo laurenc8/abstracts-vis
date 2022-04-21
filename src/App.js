@@ -6,7 +6,8 @@ import Slider from '@mui/material/Slider';
 import Test from './components/test';
 import DatatablePage from './components/table';
 import Papa from "papaparse";
-
+import { Layout} from 'antd';
+import 'antd';
 function App() {
 
   // State to store parsed data
@@ -98,16 +99,8 @@ function App() {
     setnBin(value)
   }
 
-
-
-  //idk how to turn data into a list of just ages for the histogram :(
-
-//   const ageList = data.map(ages => {
-//   return (
-//   <p>{ages.age}</p>
-//   )
-// });
-//   console.log(data.getElementById('age'))
+  var col0 = values.map(d => d[2]);
+  console.log(col0);
 
   return (
     <div>
@@ -155,12 +148,25 @@ function App() {
         </tbody>
       </table>
 
-      <h1>Clinical Trials Dashboard</h1>
+    <h1>Clinical Trials Dashboard</h1>
+    <Layout style={{ height: 20 }}>
+        <input
+          type="file"
+          name="file"
+          onChange={changeHandler}
+          accept=".csv"
+          style={{ display: "block", margin: "10px auto" }}
+        />
+        <br />
+        <br />
 
+
+
+</Layout>
+      <Layout style={{ height: 500 }}>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
 
         <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
           <Slider
@@ -177,11 +183,16 @@ function App() {
 
       </div>
 
-      {/* <div style={{display: "flex", justifyContent: "center"}}>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
-        <Histogram data={data} nBin={nBin}/>
-      </div> */}
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <Histogram data={values.slice(0,nBin)} nBin={nBin}/>
+      </div>
+
+    </Layout>
+
+    <Layout style={{ height: 920 }}>
+    <DatatablePage tableRows={tableRows} values={values}/>
+    </Layout>
+
     </div>
 
   );
