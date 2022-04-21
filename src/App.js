@@ -15,7 +15,7 @@ function App() {
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
 
-  //State to store the values
+  //State to store the displayed/filtered values
   const [values, setValues] = useState([]);
 
   //State to store if inputting CSV is hidden
@@ -25,6 +25,10 @@ function App() {
   const [showFilterInput, setShowFilterInput] = useState('hidden');
 
   const [allValues, setAllValues] = useState('');
+
+  const [currentNouns, setCurrentNouns] = useState([]);
+
+  const [currentInputNoun, setCurrentInputNoun] = useState('');
 
   const changeHandler = (event) => {
     // Passing file data (event.target.files[0]) to parse using Papa.parse
@@ -60,68 +64,35 @@ function App() {
     });
   };
 
+  const displayResults = () => {
+    if (currentNouns.length == 0) {
+      setValues(allValues);
+    }
+    else {
+      setValues(allValues.filter(d => {
+        return currentNouns.map(x => d[3] == x).some(x => x);
+      }))
+    }
+  }
+
+  const addNoun = (event) => {
+    let tempNouns = currentNouns;
+    tempNouns.push(currentInputNoun);
+    setCurrentNouns(tempNouns);
+    setCurrentInputNoun('');
+    displayResults();
+  }
+
   const filterNoun = (event) => {
     const curNoun = event.target.value;
+    setCurrentInputNoun(curNoun);
     setValues(allValues.filter(d => {
       return d[3].startsWith(curNoun);
     }))
   }
 
   const [nBin, setnBin] = useState(30)
-  const data = [{
-    name: 'Tiger Nixon',
-    position: 'System Architect',
-    office: 'Edinburgh',
-    age: '61'
-  },
-  {
-    name: 'Garrett Winters',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '63'
-  },
-  {
-    name: 'Ashton Cox',
-    position: 'Junior Technical Author',
-    office: 'San Francisco',
-    age: '66'
-  },
-  {
-    name: 'Cedric Kelly',
-    position: 'Senior Javascript Developer',
-    office: 'Edinburgh',
-    age: '22'
-  },
-  {
-    name: 'Airi Satou',
-    position: 'Accountant',
-    office: 'Tokyo',
-    age: '33'
-  },
-  {
-    name: 'Brielle Williamson',
-    position: 'Integration Specialist',
-    office: 'New York',
-    age: '61'
-  },
-  {
-    name: 'Herrod Chandler',
-    position: 'Sales Assistant',
-    office: 'San Francisco',
-    age: '59'
-  },
-  {
-    name: 'Rhona Davidson',
-    position: 'Integration Specialist',
-    office: 'Tokyo',
-    age: '55'
-  },
-  {
-    name: 'Colleen Hurst',
-    position: 'Javascript Developer',
-    office: 'San Francisco',
-    age: '39'
-  }]
+
   // [{frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 75}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 50}]
   function valuetext(value) {
     setnBin(value)
@@ -149,14 +120,18 @@ function App() {
       />
       <br />
       <br />
-
-      <input
-        type={showFilterInput}
-        name="filter"
-        onChange={filterNoun}
-        style={{ display: "block", margin: "10px auto" }}
-      />
-
+      <div style={{ display: "block", margin: "10px auto" }}>
+        <input
+          type={showFilterInput}
+          name="filter"
+          value={currentInputNoun}
+          onChange={filterNoun}
+          id='nounText'
+        />
+        <button onClick={addNoun}>
+          Add Noun
+        </button>
+      </div>
 
 
       <table>
@@ -202,11 +177,11 @@ function App() {
 
       </div>
 
-      <div style={{display: "flex", justifyContent: "center"}}>
+      {/* <div style={{display: "flex", justifyContent: "center"}}>
         <Histogram data={data} nBin={nBin}/>
         <Histogram data={data} nBin={nBin}/>
         <Histogram data={data} nBin={nBin}/>
-      </div>
+      </div> */}
     </div>
 
   );
