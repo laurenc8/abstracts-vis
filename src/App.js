@@ -8,6 +8,8 @@ import DatatablePage from './components/table';
 import Papa from "papaparse";
 import { Layout} from 'antd';
 import 'antd';
+const { Sider, Content, Footer } = Layout;
+
 function App() {
 
   // State to store parsed data
@@ -104,6 +106,7 @@ function App() {
 
   return (
     <div>
+    <h1>Clinical Trials Dashboard</h1>
       <input
         type={showCSVInput}
         name="file"
@@ -127,43 +130,8 @@ function App() {
       </div>
 
 
-      <table>
-        <thead>
-          <tr>
-            {tableRows.map((rows, index) => {
-              return <th key={index}>{rows}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {values.slice(0,nBin).map((value, index) => {
-            return (
-              <tr key={index}>
-                {value.map((val, i) => {
-                  return <td key={i}>{val}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
 
-    <h1>Clinical Trials Dashboard</h1>
-    <Layout style={{ height: 20 }}>
-        <input
-          type="file"
-          name="file"
-          onChange={changeHandler}
-          accept=".csv"
-          style={{ display: "block", margin: "10px auto" }}
-        />
-        <br />
-        <br />
-
-
-
-</Layout>
-      <Layout style={{ height: 600 }}>
+      <Layout style={{ height: 500 }}>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
@@ -190,7 +158,8 @@ function App() {
     </Layout>
 
     <Layout style={{ height: 920 }}>
-    <DatatablePage tableRows={tableRows} values={values}/>
+      <DatatablePage tableRows={tableRows} values={values}/>
+
     </Layout>
 
     </div>
