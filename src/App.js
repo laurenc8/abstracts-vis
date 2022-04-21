@@ -16,7 +16,7 @@ function App() {
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
 
-  //State to store the values
+  //State to store the displayed/filtered values
   const [values, setValues] = useState([]);
 
   //State to store if inputting CSV is hidden
@@ -26,6 +26,10 @@ function App() {
   const [showFilterInput, setShowFilterInput] = useState('hidden');
 
   const [allValues, setAllValues] = useState('');
+
+  const [currentNouns, setCurrentNouns] = useState([]);
+
+  const [currentInputNoun, setCurrentInputNoun] = useState('');
 
   const changeHandler = (event) => {
     // Passing file data (event.target.files[0]) to parse using Papa.parse
@@ -61,8 +65,28 @@ function App() {
     });
   };
 
+  const displayResults = () => {
+    if (currentNouns.length == 0) {
+      setValues(allValues);
+    }
+    else {
+      setValues(allValues.filter(d => {
+        return currentNouns.map(x => d[3] == x).some(x => x);
+      }))
+    }
+  }
+
+  const addNoun = (event) => {
+    let tempNouns = currentNouns;
+    tempNouns.push(currentInputNoun);
+    setCurrentNouns(tempNouns);
+    setCurrentInputNoun('');
+    displayResults();
+  }
+
   const filterNoun = (event) => {
     const curNoun = event.target.value;
+    setCurrentInputNoun(curNoun);
     setValues(allValues.filter(d => {
       return d[3].startsWith(curNoun);
     }))
@@ -70,6 +94,7 @@ function App() {
 
   const [nBin, setnBin] = useState(30)
 
+  // [{frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 75}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 50}]
   function valuetext(value) {
     setnBin(value)
   }
@@ -79,6 +104,50 @@ function App() {
 
   return (
     <div>
+      <input
+        type={showCSVInput}
+        name="file"
+        onChange={changeHandler}
+        accept=".csv"
+        style={{ display: "block", margin: "10px auto" }}
+      />
+      <br />
+      <br />
+      <div style={{ display: "block", margin: "10px auto" }}>
+        <input
+          type={showFilterInput}
+          name="filter"
+          value={currentInputNoun}
+          onChange={filterNoun}
+          id='nounText'
+        />
+        <button onClick={addNoun}>
+          Add Noun
+        </button>
+      </div>
+
+
+      <table>
+        <thead>
+          <tr>
+            {tableRows.map((rows, index) => {
+              return <th key={index}>{rows}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {values.slice(0,nBin).map((value, index) => {
+            return (
+              <tr key={index}>
+                {value.map((val, i) => {
+                  return <td key={i}>{val}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
     <h1>Clinical Trials Dashboard</h1>
     <Layout style={{ height: 20 }}>
         <input
