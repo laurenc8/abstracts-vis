@@ -13,6 +13,8 @@ const { Sider, Content, Footer } = Layout;
 
 function App() {
 
+  const [selectedRow, setSelectedRow] = useState([]);
+
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
 
@@ -113,7 +115,7 @@ function App() {
         } else {
           newAdjData[row[3]] = 1
           newAdjs.add(row[3])
-          console.log(newAdjs)
+          // console.log(newAdjs)
         }
       }
     }
@@ -130,7 +132,7 @@ function App() {
   }
 
   var col0 = values.map(d => d[2]);
-  console.log(col0);
+  // console.log(col0);
 
   return (
     <div style={{margin: "20px"}} className="font-link">
@@ -138,9 +140,9 @@ function App() {
         PICO Extractor
       </h1>
 
-      {/* <p className="font-link">
-      Upload csv data below!
-      </p> */}
+      <p className="font-link">
+      Welcome to PICO Extractor! This application will help you explore the Populations from randomized control trial studies. Scroll through the table below to see the relevant phrases from various abstracts. The search feature allows you to filter the results based on noun, and then display the distributions of the numbers and adjectives associated with that noun. The value next to each bar in the chart shows how many abstracts use that adjective.
+      </p>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <input
@@ -193,7 +195,7 @@ function App() {
       </Layout>
 
       <Layout style={{ height: 920 }}>
-        <DatatablePage tableRows={tableRows} values={values}/>
+        <DatatablePage tableRows={tableRows} values={values} passSelectedRow={setSelectedRow}/>
       </Layout>
 
   </div>
