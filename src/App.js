@@ -15,6 +15,8 @@ function App() {
 
   const [selectedRow, setSelectedRow] = useState([]);
 
+  const [showData, setShowData] = useState(false);
+
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
 
@@ -66,6 +68,8 @@ function App() {
 
         // Hide CSV Input
         setShowCSVInput('hidden');
+        
+        setShowData(true);
 
         // Show Filter input
         setShowFilterInput('text');
@@ -153,46 +157,49 @@ function App() {
         />
       </div>
 
-      <div style={{ display: "block", margin: "10px auto" }}>
-        <input
-          type={showFilterInput}
-          name="filter"
-          value={currentInputNoun}
-          onChange={filterNoun}
-          id='nounText'
-        />
-        <button onClick={addNoun}>
-          Add Noun
-        </button>
-      </div>
-
-
-
-      <Layout style={{ height: 500 }}>
-
-        <div style={{display: "flex", justifyContent: "center"}}>
-          <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
-          <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
-            <Slider
-              aria-label="Number of Bins"
-              defaultValue={10}
-              getAriaValueText={valuetext}
-              valueLabelDisplay="on"
-              step={1}
-              marks
-              min={1}
-              max={20}
+      {showData ?
+        <div>
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <input
+              type={showFilterInput}
+              name="filter"
+              value={currentInputNoun}
+              onChange={filterNoun}
+              id='nounText'
             />
-          </Box>
-        </div>
+            <button onClick={addNoun} className="font-link">
+              Add Noun
+            </button>
+          </div>
 
-        <div style={{display: "flex", justifyContent: "center"}}>
-          <Histogram data={values} nBin={nBin}/>
-          <NumHist width="400" height="220" data={adjData}/>
-        </div>
+          <Layout style={{ height: 500 }}>
 
-      </Layout>
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+
+              <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
+                <Slider
+                  aria-label="Number of Bins"
+                  defaultValue={10}
+                  getAriaValueText={valuetext}
+                  valueLabelDisplay="on"
+                  step={1}
+                  marks
+                  min={1}
+                  max={20}
+                />
+              </Box>
+            </div>
+
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <Histogram data={values} nBin={nBin}/>
+              <NumHist width="400" height="220" data={adjData}/>
+            </div>
+
+          </Layout>
+        </div>
+        : null
+      }
 
       <Layout style={{ height: 920 }}>
         <DatatablePage tableRows={tableRows} values={values} passSelectedRow={setSelectedRow}/>
