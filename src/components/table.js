@@ -1,29 +1,47 @@
 import React from 'react';
-import { MDBDataTable } from 'mdbreact';
+import './table.css';
 
-const DatatablePage = ( {data, nbins} ) => {
-  // const data = [{frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 250}, {frequency: 350}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 75}, {frequency: 15}, {frequency: 20}, {frequency: 20}, {frequency: 150}, {frequency: 50}]
-  // const hi = ;
-  // console.log(hi)
-  const ndata = {
-    columns: data.columns,
-    rows:data.rows.slice(0,nbins)
-  }
+const DatatablePage = ( {tableRows, values, nbins} ) => {
 
   return (
-
-    <MDBDataTable
-      scrollY
-      //scrollX
-      maxHeight="200px"
-      striped
-      bordered
-      small
-      paging={false}
-      data={ndata}
-      searching={false}
-    />
+    <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          {tableRows.map((rows, index) => {
+            return <th key={index}>{rows}</th>;
+          })}
+        </tr>
+      </thead>
+      <tbody>
+        {values.map((value, index) => {
+          return (
+            <tr key={index}>
+              {value.map((val, i) => {
+                return <td key={i}>{val}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    </div>
   );
 }
 
 export default DatatablePage;
+
+
+//
+// <MDBDataTable
+//   scrollY
+//   //scrollX
+//   maxHeight="200px"
+//   striped
+//   bordered
+//   small
+//   paging={false}
+//   data={ndata}
+//   searching={false}
+// />
+// );

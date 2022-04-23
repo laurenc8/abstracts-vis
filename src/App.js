@@ -1,12 +1,15 @@
 import './App.css';
 import React, { useState } from 'react';
-import Histogram from './components/histogram';
+import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 // import Test from './components/test';
 // import DatatablePage from './components/table';
 import Papa from "papaparse";
 import NumHist from './components/NumHist.js'
+import { Layout} from 'antd';
+import 'antd';
+const { Sider, Content, Footer } = Layout;
 
 function App() {
 
@@ -16,7 +19,7 @@ function App() {
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
 
-  //State to store the values
+  //State to store the displayed/filtered values
   const [values, setValues] = useState([]);
 
   //State to store if inputting CSV is hidden
@@ -29,6 +32,10 @@ function App() {
 
   const [adjData, setAdjData] = useState([])
   const [nounData, setNounData] = useState([])
+  
+  const [currentNouns, setCurrentNouns] = useState([]);
+
+  const [currentInputNoun, setCurrentInputNoun] = useState('');
 
   const changeHandler = (event) => {
     // Passing file data (event.target.files[0]) to parse using Papa.parse
@@ -66,8 +73,28 @@ function App() {
     });
   };
 
+  const displayResults = () => {
+    if (currentNouns.length == 0) {
+      setValues(allValues);
+    }
+    else {
+      setValues(allValues.filter(d => {
+        return currentNouns.map(x => d[3] == x).some(x => x);
+      }))
+    }
+  }
+
+  const addNoun = (event) => {
+    let tempNouns = currentNouns;
+    tempNouns.push(currentInputNoun);
+    setCurrentNouns(tempNouns);
+    setCurrentInputNoun('');
+    displayResults();
+  }
+
   const filterNoun = (event) => {
     const curNoun = event.target.value;
+    setCurrentInputNoun(curNoun);
     setValues(allValues.filter(d => {
       return d[3].startsWith(curNoun);
     }))
@@ -102,6 +129,9 @@ function App() {
     setnBin(value)
   }
 
+  var col0 = values.map(d => d[2]);
+  console.log(col0);
+
   return (
     <div style={{margin: "20px"}} className="font-link">
       <h1 style={{display: "flex", justifyContent: "center"}}>
@@ -121,13 +151,18 @@ function App() {
         />
       </div>
 
-      <input
-        type={showFilterInput}
-        name="filter"
-        onChange={filterNoun}
-        style={{ display: "block", margin: "10px auto" }}
-        label="hi"
-      />
+      <div style={{ display: "block", margin: "10px auto" }}>
+        <input
+          type={showFilterInput}
+          name="filter"
+          value={currentInputNoun}
+          onChange={filterNoun}
+          id='nounText'
+        />
+        <button onClick={addNoun}>
+          Add Noun
+        </button>
+      </div>
 
       <table>
         <thead>
@@ -150,29 +185,37 @@ function App() {
         </tbody>
       </table>
 
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+      <Layout style={{ height: 500 }}>
 
-        <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
-          <Slider
-            aria-label="Number of Bins"
-            defaultValue={10}
-            getAriaValueText={valuetext}
-            valueLabelDisplay="on"
-            step={1}
-            marks
-            min={1}
-            max={20}
-          />
-        </Box>
-      </div>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
 
-      <div style={{display: "flex", justifyContent: "center"}}>
-        {/* {console.log(values[0])} */}
-        <Histogram data={values} nBin={nBin}/>
-        <NumHist width="400" height="220" data={adjData}/>
-      </div>
-    </div>
+          <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
+            <Slider
+              aria-label="Number of Bins"
+              defaultValue={10}
+              getAriaValueText={valuetext}
+              valueLabelDisplay="on"
+              step={1}
+              marks
+              min={1}
+              max={20}
+            />
+          </Box>
+        </div>
+
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <Histogram data={values} nBin={nBin}/>
+          <NumHist width="400" height="220" data={adjData}/>
+        </div>
+
+      </Layout>
+
+      <Layout style={{ height: 920 }}>
+        <DatatablePage tableRows={tableRows} values={values}/>
+      </Layout>
+
+  </div>
 
   );
 }

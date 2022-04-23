@@ -1,0 +1,10 @@
+div.scroll {
+    margin:4px, 4px;
+    padding:4px;
+    height: 220px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

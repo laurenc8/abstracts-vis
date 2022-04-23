@@ -13,7 +13,7 @@ export default class BarChart extends Component {
 
     render() {
         return (
-            <div className='vis-barchart'/>
+            <div className='hist'/>
         )
     }
 }
