@@ -22,7 +22,7 @@ function Histogram({ data, nBin}) {
         //.domain([0, d3.max(data, function(d) { return d.length; })])
         .range([height, 0]);
       var yAxis = svg.append("g")
-         .attr("transform", "translate(30, 10)")
+        .attr("transform", "translate(30, 10)")
 
       // A function that builds the graph for a specific value of bin
       function update(nBin) {

@@ -74,12 +74,12 @@ function App() {
   };
 
   const displayResults = () => {
-    if (currentNouns.length == 0) {
+    if (currentNouns.length === 0) {
       setValues(allValues);
     }
     else {
       setValues(allValues.filter(d => {
-        return currentNouns.map(x => d[3] == x).some(x => x);
+        return currentNouns.map(x => d[3] === x).some(x => x);
       }))
     }
   }
