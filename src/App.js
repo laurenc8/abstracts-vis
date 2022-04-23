@@ -13,6 +13,10 @@ const { Sider, Content, Footer } = Layout;
 
 function App() {
 
+  const [selectedRow, setSelectedRow] = useState([]);
+
+  const [showData, setShowData] = useState(false);
+
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
 
@@ -64,6 +68,8 @@ function App() {
 
         // Hide CSV Input
         setShowCSVInput('hidden');
+        
+        setShowData(true);
 
         // Show Filter input
         setShowFilterInput('text');
@@ -113,7 +119,7 @@ function App() {
         } else {
           newAdjData[row[3]] = 1
           newAdjs.add(row[3])
-          console.log(newAdjs)
+          // console.log(newAdjs)
         }
       }
     }
@@ -130,7 +136,7 @@ function App() {
   }
 
   var col0 = values.map(d => d[2]);
-  console.log(col0);
+  // console.log(col0);
 
   return (
     <div style={{margin: "20px"}} className="font-link">
@@ -138,9 +144,9 @@ function App() {
         PICO Extractor
       </h1>
 
-      {/* <p className="font-link">
-      Upload csv data below!
-      </p> */}
+      <p className="font-link">
+      Welcome to PICO Extractor! This application will help you explore the Populations from randomized control trial studies. Scroll through the table below to see the relevant phrases from various abstracts. The search feature allows you to filter the results based on noun, and then display the distributions of the numbers and adjectives associated with that noun. The value next to each bar in the chart shows how many abstracts use that adjective.
+      </p>
 
       <div style={{display: "flex", justifyContent: "center"}}>
         <input
@@ -151,49 +157,52 @@ function App() {
         />
       </div>
 
-      <div style={{ display: "block", margin: "10px auto" }}>
-        <input
-          type={showFilterInput}
-          name="filter"
-          value={currentInputNoun}
-          onChange={filterNoun}
-          id='nounText'
-        />
-        <button onClick={addNoun}>
-          Add Noun
-        </button>
-      </div>
-
-
-
-      <Layout style={{ height: 500 }}>
-
-        <div style={{display: "flex", justifyContent: "center"}}>
-          <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
-
-          <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
-            <Slider
-              aria-label="Number of Bins"
-              defaultValue={10}
-              getAriaValueText={valuetext}
-              valueLabelDisplay="on"
-              step={1}
-              marks
-              min={1}
-              max={20}
+      {showData ?
+        <div>
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <input
+              type={showFilterInput}
+              name="filter"
+              value={currentInputNoun}
+              onChange={filterNoun}
+              id='nounText'
             />
-          </Box>
-        </div>
+            <button onClick={addNoun} className="font-link">
+              Add Noun
+            </button>
+          </div>
 
-        <div style={{display: "flex", justifyContent: "center"}}>
-          <Histogram data={values} nBin={nBin}/>
-          <NumHist width="400" height="220" data={adjData}/>
-        </div>
+          <Layout style={{ height: 500 }}>
 
-      </Layout>
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+
+              <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
+                <Slider
+                  aria-label="Number of Bins"
+                  defaultValue={10}
+                  getAriaValueText={valuetext}
+                  valueLabelDisplay="on"
+                  step={1}
+                  marks
+                  min={1}
+                  max={20}
+                />
+              </Box>
+            </div>
+
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <Histogram data={values} nBin={nBin}/>
+              <NumHist width="400" height="220" data={adjData}/>
+            </div>
+
+          </Layout>
+        </div>
+        : null
+      }
 
       <Layout style={{ height: 920 }}>
-        <DatatablePage tableRows={tableRows} values={values}/>
+        <DatatablePage tableRows={tableRows} values={values} passSelectedRow={setSelectedRow}/>
       </Layout>
 
   </div>

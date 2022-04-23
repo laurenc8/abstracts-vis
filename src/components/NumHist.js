@@ -87,7 +87,7 @@ export default withTooltip(
                         fill={"url('#lines')"}
                         stroke="black"
                       />
-                      <text x={bar.x + bar.width + 10} y={bar.y + bar.height/2 + 6} style={{fill: textColor, fontFamily: 'Calibre, sans-serif', fontSize: 18}}>
+                      <text x={bar.x + bar.width + 10} y={bar.y + bar.height/2 + 6} style={{fill: textColor, fontFamily: 'Poppins, sans-serif', fontSize: 15}}>
                         {bar.bar[1]}
                       </text>
                     </Group>
@@ -103,8 +103,8 @@ export default withTooltip(
               tickStroke={textColor}
               tickLabelProps={() => ({
                 fill: textColor,
-                fontFamily: 'Calibre, sans-serif',
-                fontSize: 20,
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: 15,
                 textAnchor: 'end',
                 dy: '0.33em',
               })}
