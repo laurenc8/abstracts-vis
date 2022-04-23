@@ -7,11 +7,14 @@ const draw = (props) => {
 
     var data = [];
     for (let i = 0; i < arr.length; i++) {
-      data.push(arr[2]);
+      data.push(parseInt(arr[i][2]));
     }
 
+    var min = d3.min(data);
+    var max = d3.max(data);
+    var domain = [min,max];
+
     var nBin = props.nBin;
-    console.log(data);
 
     var margin = {top: 10, right: 30, bottom: 30, left: 40},
       width = 460 - margin.left - margin.right,

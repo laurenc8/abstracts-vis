@@ -4,7 +4,7 @@ import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 // import Test from './components/test';
-// import DatatablePage from './components/table';
+import DatatablePage from './components/table';
 import Papa from "papaparse";
 import NumHist from './components/NumHist.js'
 import { Layout} from 'antd';
@@ -32,7 +32,7 @@ function App() {
 
   const [adjData, setAdjData] = useState([])
   const [nounData, setNounData] = useState([])
-  
+
   const [currentNouns, setCurrentNouns] = useState([]);
 
   const [currentInputNoun, setCurrentInputNoun] = useState('');
@@ -164,26 +164,7 @@ function App() {
         </button>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            {tableRows.map((rows, index) => {
-              return <th key={index}>{rows}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {values.map((value, index) => {
-            return (
-              <tr key={index}>
-                {value.map((val, i) => {
-                  return <td key={i}>{val}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+
 
       <Layout style={{ height: 500 }}>
 
