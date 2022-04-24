@@ -1,7 +1,7 @@
 import React from 'react';
 import './table.css';
 
-const DatatablePage = ( {tableRows, values, passSelectedRow} ) => {
+const DatatablePage = ( {tableRows, values} ) => {
 
   return (
     <div class="scroll">
@@ -16,9 +16,9 @@ const DatatablePage = ( {tableRows, values, passSelectedRow} ) => {
       <tbody>
         {values.map((value, index) => {
           return (
-            <tr key={index} onClick={() => {passSelectedRow(value)}}>
+            <tr key={index}>
               {value.map((val, i) => {
-                return <td key={i}>{val}</td>;
+                return i === 4 ? <a href={`https://pubmed.ncbi.nlm.nih.gov/${val}/`}>{val}</a> : <td key={i}>{val}</td>
               })}
             </tr>
           );
