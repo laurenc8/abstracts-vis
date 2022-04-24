@@ -1,5 +1,6 @@
 import React, { Component }  from 'react';
 import draw from './hist';
+import './hist.css';
 
 export default class Histogram extends Component {
 //function Histogram({ data, nBin}) {

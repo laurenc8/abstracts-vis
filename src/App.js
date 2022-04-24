@@ -68,7 +68,7 @@ function App() {
 
         // Hide CSV Input
         setShowCSVInput('hidden');
-        
+
         setShowData(true);
 
         // Show Filter input
