@@ -154,6 +154,7 @@ function App() {
           name="file"
           onChange={changeHandler}
           accept=".csv"
+          className="font-link"
         />
       </div>
 
@@ -165,6 +166,7 @@ function App() {
               name="filter"
               value={currentInputNoun}
               onChange={filterNoun}
+              className="font-link"
               id='nounText'
             />
             <button onClick={addNoun} className="font-link">
