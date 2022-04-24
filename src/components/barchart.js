@@ -19,12 +19,6 @@ export default withTooltip(
     data,
     events = false,
     margin = defaultMargin,
-    // tooltipOpen,
-    // tooltipLeft,
-    // tooltipTop,
-    // tooltipData,
-    // hideTooltip,
-    // showTooltip,
   }) => {
     const keys = ["frequency"]
 
@@ -84,7 +78,6 @@ export default withTooltip(
                         y={bar.y}
                         width={bar.width}
                         height={bar.height}
-                        // fill={"url('#lines')"}
                         fill={'#6495ED'}
                         stroke="black"
                       />
@@ -110,18 +103,6 @@ export default withTooltip(
                 dy: '0.33em',
               })}
             />
-            {/* <AxisBottom
-              top={yMax}
-              scale={frequencyScale}
-              stroke={textColor}
-              tickStroke={textColor}
-              tickLabelProps={() => ({
-                fill: textColor,
-                fontFamily: 'Calibre, sans-serif',
-                fontSize: 15,
-                textAnchor: 'middle',
-              })}
-            /> */}
           </Group>
         </svg>
         <div

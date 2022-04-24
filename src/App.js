@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import DatatablePage from './components/table';
 import Papa from "papaparse";
-import NumHist from './components/NumHist.js'
+import BarChart from './components/barchart.js'
 
 function App() {
 
@@ -230,8 +230,8 @@ function App() {
 
           <div style={{display: "flex", justifyContent: "center"}}>
             <Histogram data={values} nBin={nBin}/>
-            <NumHist width="460" height="400" data={adjData}/>
-            <NumHist width="460" height="400" data={nounData}/>
+            <BarChart width="460" height="400" data={adjData}/>
+            <BarChart width="460" height="400" data={nounData}/>
           </div>
         </div>
         : null
