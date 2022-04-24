@@ -13,7 +13,7 @@ const draw = (props) => {
 
     var data = [];
     for (let i = 0; i < arr.length; i++) {
-      data.push(parseInt(arr[i][2]));
+      data.push(parseInt(arr[i][1]));
     }
 
     var min = d3.min(data);
@@ -51,9 +51,6 @@ const draw = (props) => {
       .attr("transform", "translate(0," + (height+10) + ")")
       .call(d3.axisBottom(x));
 
-
-
-
     var y = d3.scaleLinear()
       .range([height, 0])
       .domain([0,d3.max(bins,function(d) {return d.length;})]);
@@ -68,7 +65,7 @@ const draw = (props) => {
         .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
         .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
         .attr("height", function(d) {return height - y(d.length); })
-        .style("fill", "url('#lines')")
+        .style("fill", "#6495ED")
         .style("stroke", "black")
 
     svg.append("text")

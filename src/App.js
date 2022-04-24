@@ -13,8 +13,6 @@ const { Sider, Content, Footer } = Layout;
 
 function App() {
 
-  const [selectedRow, setSelectedRow] = useState([]);
-
   const [showData, setShowData] = useState(false);
 
   // State to store parsed data
@@ -236,7 +234,7 @@ function App() {
       }
 
       <Layout style={{ height: 920 }}>
-        <DatatablePage tableRows={tableRows} values={values} passSelectedRow={setSelectedRow}/>
+        <DatatablePage tableRows={tableRows} values={values}/>
       </Layout>
 
   </div>
