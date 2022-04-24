@@ -9,14 +9,14 @@ const DatatablePage = ( {tableRows, values} ) => {
       <thead>
         <tr>
           {tableRows.map((rows, index) => {
-            return <th key={index}>{rows}</th>
+            return <th key={index} style={{textAlign: "center"}}>{rows}</th>
           })}
         </tr>
       </thead>
       <tbody>
         {values.map((value, index) => {
           return (
-            <tr key={index}>
+            <tr key={index} style={{textAlign: "center"}}>
               {value.map((val, i) => {
                 return i === 4 ? <a href={`https://pubmed.ncbi.nlm.nih.gov/${val}/`}>{val}</a> : <td key={i}>{val}</td>
               })}
