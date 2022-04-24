@@ -155,7 +155,7 @@ function App() {
       </h1>
 
       <p className="font-link">
-      Welcome to PICO Extractor! This application will help you explore the Populations from randomized control trial studies. Scroll through the table below to see the relevant phrases from various abstracts. The search feature allows you to filter the results based on noun, and then display the distributions of the numbers and adjectives associated with that noun. The value next to each bar in the chart shows how many abstracts use that adjective.
+      Welcome to PICO Extractor! This application will help you explore the Populations from randomized control trial studies. Scroll through the table below to see the relevant phrases from various abstracts. The search feature allows you to filter the results based on noun, and then display the distributions of the numbers and adjectives associated with that noun. The value next to each bar in the chart shows how many abstracts use that adjective. Click the link in the PMID column to see the original paper.
       </p>
 
       <div style={{display: "flex", justifyContent: "center"}}>
