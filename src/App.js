@@ -86,7 +86,8 @@ function App() {
     else {
       setValues(allValues.filter(d => {
         return currentNouns.map(x => d[3] === x).some(x => x);
-      }))
+      }
+      ))
     }
   }
 
@@ -132,7 +133,6 @@ function App() {
         } else {
           newAdjData[row[3]] = 1
           newAdjs.add(row[3])
-          // console.log(newAdjs)
         }
       }
     }
@@ -140,7 +140,6 @@ function App() {
     newAdjs.forEach(key => {
       finalAdjData.push({category: key, frequency: newAdjData[key]})
     })
-    // console.log(finalAdjData)
     setAdjData(finalAdjData)
   }
 
@@ -227,7 +226,8 @@ function App() {
 
             <div style={{display: "flex", justifyContent: "center"}}>
               <Histogram data={values} nBin={nBin}/>
-              <NumHist width="400" height="220" data={adjData}/>
+              <NumHist width="460" height="400" data={adjData}/>
+              <NumHist width="460" height="400" data={nounData}/>
             </div>
 
           </Layout>

@@ -8,8 +8,8 @@ import { PatternLines } from '@visx/pattern';
 
 const barColor = '#000000';
 const unusedColor = '#000000';
-export const textColor = '#727272';
-export const background = '#F9F9F9';
+export const textColor = '#000000';
+export const background = '#ffffff';
 const defaultMargin = { top: 20, left: 200, right: 40, bottom: 20 };
 
 export default withTooltip(
@@ -84,7 +84,8 @@ export default withTooltip(
                         y={bar.y}
                         width={bar.width}
                         height={bar.height}
-                        fill={"url('#lines')"}
+                        // fill={"url('#lines')"}
+                        fill={'#6495ED'}
                         stroke="black"
                       />
                       <text x={bar.x + bar.width + 10} y={bar.y + bar.height/2 + 6} style={{fill: textColor, fontFamily: 'Poppins, sans-serif', fontSize: 15}}>
