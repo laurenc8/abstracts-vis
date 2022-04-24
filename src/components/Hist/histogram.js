@@ -3,15 +3,12 @@ import draw from './hist';
 import './hist.css';
 
 export default class Histogram extends Component {
-//function Histogram({ data, nBin}) {
 
   componentDidMount() {
-      console.log("Did Mount?");
       draw(this.props);
   }
 
   componentDidUpdate(preProps) {
-      console.log("Update?");
       draw(this.props);
   }
 
