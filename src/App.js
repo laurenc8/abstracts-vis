@@ -3,13 +3,9 @@ import React, { useState } from 'react';
 import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-// import Test from './components/test';
 import DatatablePage from './components/table';
 import Papa from "papaparse";
 import NumHist from './components/NumHist.js'
-import { Layout} from 'antd';
-import 'antd';
-const { Sider, Content, Footer } = Layout;
 
 function App() {
 
@@ -145,11 +141,8 @@ function App() {
     setnBin(value)
   }
 
-  var col0 = values.map(d => d[2]);
-  // console.log(col0);
-
   return (
-    <div style={{margin: "20px"}} className="font-link">
+    <div style={{margin: 20}} className="font-link">
       <h1 style={{display: "flex", justifyContent: "center"}}>
         PICO Extractor
       </h1>
@@ -170,7 +163,8 @@ function App() {
 
       {showData ?
         <div>
-          <div style={{display: "flex", justifyContent: "center"}}>
+
+          <div style={{display: "flex", justifyContent: "center", margin: 20}}>
             <input
               type={showFilterInput}
               name="filter"
@@ -184,29 +178,38 @@ function App() {
             </button>
           </div>
 
-          <div style={{display: "flex", justifyContent: "center"}}>
-            <table>
-              <thead>
-                <tr>
-                  <th> Nouns </th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentNouns && currentNouns.map(noun =>
-                    <tr key={noun}>
-                        <td>{noun}</td>
-                        <td onClick={removeNoun(noun)}>&#10006;</td>
-                    </tr>
-                )}
-              </tbody>
-            </table>
+          {currentNouns.length === 0 ? null :
+            <div style={{display: "flex", justifyContent: "center"}}>
+              <table>
+                <thead>
+                  <tr>
+                    <th> Nouns </th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentNouns && currentNouns.map(noun =>
+                      <tr key={noun}>
+                          <td>{noun}</td>
+                          <td onClick={removeNoun(noun)}>&#10006;</td>
+                      </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          }
+
+          <DatatablePage tableRows={tableRows} values={values}/>
+
+          <div style={{display: "flex", justifyContent: "space-evenly"}}>
+            <h4>Number</h4>
+            <h4>Descriptor</h4>
+            <h4>Noun</h4>
           </div>
 
-          <Layout style={{ height: 500 }}>
-
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <p style={{marginTop: 43, marginRight: -30}}>Number of Bins</p>
+          <div style={{marginLeft: 40, marginTop: -30}}>
+            <div style={{display: "flex"}}>
+              <p style={{marginTop: 43, marginRight: -30}}># of Bins</p>
 
               <Box sx={{ width: 300, margin: 5, marginBottom: 0 }}>
                 <Slider
@@ -221,21 +224,18 @@ function App() {
                 />
               </Box>
             </div>
+            <div />
+            <div />
+          </div>
 
-            <div style={{display: "flex", justifyContent: "center"}}>
-              <Histogram data={values} nBin={nBin}/>
-              <NumHist width="460" height="400" data={adjData}/>
-              <NumHist width="460" height="400" data={nounData}/>
-            </div>
-
-          </Layout>
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <Histogram data={values} nBin={nBin}/>
+            <NumHist width="460" height="400" data={adjData}/>
+            <NumHist width="460" height="400" data={nounData}/>
+          </div>
         </div>
         : null
       }
-
-      <Layout style={{ height: 920 }}>
-        <DatatablePage tableRows={tableRows} values={values}/>
-      </Layout>
 
   </div>
 
