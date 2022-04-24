@@ -1,4 +1,10 @@
 import * as d3 from 'd3';
+import './hist.css';
+
+const barColor = '#000000';
+const unusedColor = '#000000';
+export const textColor = '#727272';
+export const background = '#F9F9F9';
 
 const draw = (props) => {
 
@@ -16,10 +22,11 @@ const draw = (props) => {
 
     var nBin = props.nBin;
 
-    var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    var margin = {top: 10, right: 20, bottom: 70, left: 70},
       width = 460 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
+    
 
     var x = d3.scaleLinear()
       .domain([0, 500])
@@ -45,6 +52,8 @@ const draw = (props) => {
       .call(d3.axisBottom(x));
 
 
+
+
     var y = d3.scaleLinear()
       .range([height, 0])
       .domain([0,d3.max(bins,function(d) {return d.length;})]);
@@ -59,7 +68,23 @@ const draw = (props) => {
         .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
         .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
         .attr("height", function(d) {return height - y(d.length); })
-        .style("fill", "#dcd0ff")
+        .style("fill", "url('#lines')")
+        .style("stroke", "black")
+
+    svg.append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", 300)
+      .attr("y", height + 40)
+      .text("Number of Participants");
+
+    svg.append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", -40)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text("Frequency");
 
 }
 
