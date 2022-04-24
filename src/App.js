@@ -92,10 +92,23 @@ function App() {
 
   const addNoun = (event) => {
     let tempNouns = currentNouns;
-    tempNouns.push(currentInputNoun);
-    setCurrentNouns(tempNouns);
+    let newNoun = currentInputNoun.toLowerCase();
     setCurrentInputNoun('');
-    displayResults();
+    if (!tempNouns.includes(newNoun)) {
+      tempNouns.push(newNoun);
+      setCurrentNouns(tempNouns);
+      displayResults();
+    }
+  }
+
+  const removeNoun = (noun) => {
+    return (event) => {
+      let tempNouns = currentNouns;
+      let tempIndex = tempNouns.indexOf(noun);
+      tempNouns.splice(tempIndex, 1);
+      setCurrentNouns(tempNouns);
+      displayResults();
+    }
   }
 
   const filterNoun = (event) => {
@@ -172,6 +185,25 @@ function App() {
             <button onClick={addNoun} className="font-link">
               Add Noun
             </button>
+          </div>
+
+          <div style={{display: "flex", justifyContent: "center"}}>
+            <table>
+              <thead>
+                <tr>
+                  <th> Nouns </th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentNouns && currentNouns.map(noun =>
+                    <tr key={noun}>
+                        <td>{noun}</td>
+                        <td onClick={removeNoun(noun)}>&#10006;</td>
+                    </tr>
+                )}
+              </tbody>
+            </table>
           </div>
 
           <Layout style={{ height: 500 }}>
