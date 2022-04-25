@@ -68,7 +68,7 @@ function App() {
         // Show Filter input
         setShowFilterInput('text');
 
-        updateBarCharts([[0, 0, 0, "patients"], [0, 0, 0, "patients"], [0, 0, 0, "participants"], [0, 0, 0, "smokers"]])
+        updateBarCharts(valuesArray);
       },
     });
   };
@@ -76,16 +76,18 @@ function App() {
   const displayResults = () => {
     if (currentNouns.length === 0) {
       setValues(allValues);
+      updateBarCharts(allValues);
     }
     else {
-      setValues(allValues.filter(d => {
+      let newValues = allValues.filter(d => {
         return currentNouns.map(x => d[3] === x).some(x => x);
-      }
-      ))
+      })
+      updateBarCharts(newValues);
+      setValues(newValues);
     }
   }
 
-  const addNoun = (event) => {
+  const addNoun = () => {
     let tempNouns = currentNouns;
     let newNoun = currentInputNoun.toLowerCase();
     setCurrentInputNoun('');
@@ -97,7 +99,7 @@ function App() {
   }
 
   const removeNoun = (noun) => {
-    return (event) => {
+    return () => {
       let tempNouns = currentNouns;
       let tempIndex = tempNouns.indexOf(noun);
       tempNouns.splice(tempIndex, 1);
@@ -121,12 +123,12 @@ function App() {
     let newAdjs = new Set()
     for (let i = 0; i < data.length; i++) {
       const row = data[i]
-      if (row[3] !== "") {
-        if (newAdjs.has(row[3])) {
-          newAdjData[row[3]] = newAdjData[row[3]] + 1
+      if (row[2] !== "") {
+        if (newAdjs.has(row[2])) {
+          newAdjData[row[2]] = newAdjData[row[2]] + 1
         } else {
-          newAdjData[row[3]] = 1
-          newAdjs.add(row[3])
+          newAdjData[row[2]] = 1
+          newAdjs.add(row[2])
         }
       }
     }
@@ -134,7 +136,26 @@ function App() {
     newAdjs.forEach(key => {
       finalAdjData.push({category: key, frequency: newAdjData[key]})
     })
-    setAdjData(finalAdjData)
+    setAdjData(finalAdjData);
+
+    let newNounData = {}
+    let newNouns = new Set()
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i]
+      if (row[3] !== "") {
+        if (newNouns.has(row[3])) {
+          newNounData[row[3]] = newNounData[row[3]] + 1
+        } else {
+          newNounData[row[3]] = 1
+          newNouns.add(row[3])
+        }
+      }
+    }
+    let finalNounData = []
+    newNouns.forEach(key => {
+      finalNounData.push({category: key, frequency: newNounData[key]})
+    })
+    setNounData(finalNounData);
   }
 
   function valuetext(value) {
