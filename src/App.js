@@ -26,7 +26,7 @@ function App() {
   //State to filter values
   const [showFilterInput, setShowFilterInput] = useState('hidden');
 
-  const [allValues, setAllValues] = useState('');
+  const [allValues, setAllValues] = useState([]);
 
   const [adjData, setAdjData] = useState([])
   const [nounData, setNounData] = useState([])
@@ -91,7 +91,7 @@ function App() {
     let tempNouns = currentNouns;
     let newNoun = currentInputNoun.toLowerCase();
     setCurrentInputNoun('');
-    if (!tempNouns.includes(newNoun)) {
+    if (!tempNouns.includes(newNoun) && allValues.filter(d => d[3] == newNoun).length > 0) {
       tempNouns.push(newNoun);
       setCurrentNouns(tempNouns);
       displayResults();
@@ -133,10 +133,17 @@ function App() {
       }
     }
     let finalAdjData = []
-    newAdjs.forEach(key => {
-      finalAdjData.push({category: key, frequency: newAdjData[key]})
+    let sortable = [];
+    for (var adj in newAdjData) {
+        sortable.push([adj, newAdjData[adj]]);
+    }    
+    sortable.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+    sortable.forEach(key => {
+      finalAdjData.push({category: key[0], frequency: key[1]})
     })
-    setAdjData(finalAdjData);
+    setAdjData(finalAdjData.slice(0,10).reverse());
 
     let newNounData = {}
     let newNouns = new Set()
@@ -151,11 +158,21 @@ function App() {
         }
       }
     }
+
+
+
     let finalNounData = []
-    newNouns.forEach(key => {
-      finalNounData.push({category: key, frequency: newNounData[key]})
+    sortable = [];
+    for (var noun in newNounData) {
+        sortable.push([noun, newNounData[noun]]);
+    }    
+    sortable.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+    sortable.forEach(key => {
+      finalNounData.push({category: key[0], frequency: key[1]})
     })
-    setNounData(finalNounData);
+    setNounData(finalNounData.slice(0,10).reverse());
   }
 
   function valuetext(value) {
