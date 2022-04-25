@@ -247,7 +247,7 @@ function App() {
                   aria-label="Number of Bins"
                   defaultValue={10}
                   getAriaValueText={valuetext}
-                  valueLabelDisplay="on"
+                  // valueLabelDisplay="on"
                   step={1}
                   marks
                   min={1}
