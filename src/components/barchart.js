@@ -10,7 +10,7 @@ const barColor = '#000000';
 const unusedColor = '#000000';
 export const textColor = '#000000';
 export const background = '#ffffff';
-const defaultMargin = { top: 20, left: 200, right: 40, bottom: 20 };
+const defaultMargin = { top: 0, left: 250, right: 40, bottom: 0 };
 
 export default withTooltip(
   ({
@@ -49,15 +49,7 @@ export default withTooltip(
     return width < 10 ? null : (
       <div>
         <svg width={width} height={height}>
-          <PatternLines
-            id="lines"
-            height={5}
-            width={5}
-            stroke={'black'}
-            strokeWidth={1}
-            orientation={['diagonal']}
-          />
-          <rect width={width} height={height} fill={background} rx={14} />
+          <rect width={width} height={height} fill={background}/>
           <Group top={margin.top} left={margin.left}>
             <BarStackHorizontal
               data={data}
