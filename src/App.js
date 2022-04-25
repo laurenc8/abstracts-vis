@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import Histogram from './components/hist/histogram';
+import Histogram from './components/Hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import DatatablePage from './components/table';
