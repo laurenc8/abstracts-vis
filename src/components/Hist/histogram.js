@@ -18,15 +18,3 @@ export default class Histogram extends Component {
     )
   }
 }
-
-
-
-// <svg
-//   className='blah'
-//   style={{
-//     height: 350,
-//     width: 500,
-//     transform: "rotate(90deg)",
-//     transformOrigin: 150
-//   }}
-// />
