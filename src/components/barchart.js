@@ -4,7 +4,6 @@ import { Group } from '@visx/group';
 import { AxisLeft } from '@visx/axis';
 import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { withTooltip } from '@visx/tooltip';
-import { PatternLines } from '@visx/pattern';
 
 const barColor = '#000000';
 const unusedColor = '#000000';

@@ -11,9 +11,9 @@ const draw = (props) => {
       data.push(parseInt(arr[i][1]));
     }
 
-    var min = d3.min(data);
-    var max = d3.max(data);
-    var domain = [min,max];
+    // var min = d3.min(data);
+    // var max = d3.max(data);
+    // var domain = [min,max];
 
     var nBin = props.nBin;
 
@@ -22,7 +22,7 @@ const draw = (props) => {
       height = 400 - margin.top - margin.bottom;
 
     var x = d3.scaleLinear()
-      .domain([0, 500])
+      .domain([0, 900])
       .range([30, 400]);
 
     var histogram = d3.histogram()

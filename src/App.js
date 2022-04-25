@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import Histogram from './components/Hist/histogram';
+import Histogram from './components/hist/histogram';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import DatatablePage from './components/table';
@@ -9,10 +9,9 @@ import BarChart from './components/barchart.js'
 
 function App() {
 
-  const [showData, setShowData] = useState(false);
+  const [nBin, setnBin] = useState(30)
 
-  // State to store parsed data
-  const [parsedData, setParsedData] = useState([]);
+  const [showData, setShowData] = useState(false);
 
   //State to store table Column name
   const [tableRows, setTableRows] = useState([]);
@@ -49,9 +48,6 @@ function App() {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
         });
-
-        // Parsed Data Response in array format
-        setParsedData(results.data);
 
         // Filtered Column Names
         setTableRows(rowsArray[0]);
@@ -91,7 +87,7 @@ function App() {
     let tempNouns = currentNouns;
     let newNoun = currentInputNoun.toLowerCase();
     setCurrentInputNoun('');
-    if (!tempNouns.includes(newNoun) && allValues.filter(d => d[3] == newNoun).length > 0) {
+    if (!tempNouns.includes(newNoun) && allValues.filter(d => d[3] === newNoun).length > 0) {
       tempNouns.push(newNoun);
       setCurrentNouns(tempNouns);
       displayResults();
@@ -115,8 +111,6 @@ function App() {
       return d[3].startsWith(curNoun);
     }))
   }
-
-  const [nBin, setnBin] = useState(30)
 
   const updateBarCharts = (data) => {
     let newAdjData = {}
@@ -158,7 +152,6 @@ function App() {
         }
       }
     }
-
 
 
     let finalNounData = []
